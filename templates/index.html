@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="20 учебных заданий по Python с подсказками и примерами решений.">
+  <title>CodePractice — практика Python</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}"><span class="brand-icon">CP</span> CodePractice</a>
+  <a class="top-link" href="#tasks">Задания</a>
+</header>
+<main class="container">
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">УЧИСЬ • ПРАКТИКУЙСЯ • РАСТИ</span>
+      <h1>Твой путь в <span>Python</span> начинается здесь.</h1>
+      <p>Практикуй основы программирования с помощью 20 учебных задач, подсказок и примеров решений.</p>
+      <a class="primary-button" href="#tasks">Начать обучение <span>→</span></a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="code-window">
+        <div class="window-dots"><i></i><i></i><i></i></div>
+        <p><b>def</b> <span>learn_python</span>():</p>
+        <p class="indent"><b>return</b> <em>"keep going!"</em></p>
+        <div class="success-line">✓ Ready to practice</div>
+      </div>
+      <div class="floating-badge">{ } Python</div>
+    </div>
+  </section>
+  <section class="stats">
+    <div><strong>{{ total }}</strong><span>заданий</span></div>
+    <div><strong>2</strong><span>уровня сложности</span></div>
+    <div><strong>100%</strong><span>для начинающих</span></div>
+  </section>
+  <section id="tasks" class="tasks-section">
+    <div class="section-heading">
+      <div><span class="eyebrow">БИБЛИОТЕКА ЗАДАЧ</span><h2>Выбери задание</h2></div>
+      <p>Прочитай условие, попробуй решить задачу самостоятельно, а затем посмотри подсказку и пример.</p>
+    </div>
+    <form class="filters" action="{{ url_for('index') }}" method="get">
+      <label class="search-label"><span class="sr-only">Поиск заданий</span><input type="search" name="q" value="{{ query }}" placeholder="Поиск по заданиям..."></label>
+      <label><span class="sr-only">Уровень сложности</span><select name="level">
+        <option value="Все" {% if level == "Все" %}selected{% endif %}>Все уровни</option>
+        <option value="Начальный" {% if level == "Начальный" %}selected{% endif %}>Начальный</option>
+        <option value="Средний" {% if level == "Средний" %}selected{% endif %}>Средний</option>
+      </select></label>
+      <button class="filter-button" type="submit">Найти</button>
+      {% if query or level != "Все" %}<a class="reset-link" href="{{ url_for('index') }}">Сбросить</a>{% endif %}
+    </form>
+    {% if tasks %}
+    <div class="task-grid">
+      {% for task in tasks %}
+      <article class="task-card">
+        <div class="card-top"><span class="task-number">{{ "%02d"|format(task.id) }}</span><span class="level {{ 'level-easy' if task.level == 'Начальный' else 'level-medium' }}">{{ task.level }}</span></div>
+        <h3>{{ task.title }}</h3><p>{{ task.description }}</p>
+        <a class="card-link" href="{{ url_for('task_detail', task_id=task.id) }}">Открыть задание <span>→</span></a>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state"><h3>Ничего не найдено</h3><p>Измени запрос или уровень сложности.</p><a href="{{ url_for('index') }}">Показать все задания</a></div>
+    {% endif %}
+  </section>
+</main>
+<footer>CodePractice © 2026 <span>Создано для изучения Python</span></footer>
+</body>
+</html>
