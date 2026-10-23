@@ -16,3 +16,19 @@ CodePractice — простой сайт на Flask с 20 учебными за�
 - pip;
 - браузер.
 
+  
+## Запуск на macOS или Linux
+Открой Terminal в папке проекта и выполни команды:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python app.py
+```
+
+Затем открой http://127.0.0.1:5000 в браузере. 
+Чтобы остановить сервер, нажми `Control + C` в терминале.
+
+
+
